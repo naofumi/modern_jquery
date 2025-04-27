@@ -26,6 +26,10 @@ and responds to 3 different state changes and updates the DOM accordingly in 5 l
 
 [See the video](/documents/modern-jquery.mov)
 
+<video controls>
+  <source src="./documents/modern-jquery.mov" type="video/mp4">
+</video>
+
 ## Points to note
 
 Although not specific to jQuery, these are some of the patterns that I have noticed in good jQuery code.
