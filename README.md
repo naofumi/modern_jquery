@@ -1,5 +1,15 @@
 # Modern jQuery
 
+## Setup
+
+This is a [Vite application](https://vite.dev/guide/#scaffolding-your-first-vite-project).
+
+Run it with the following command.
+
+```shell
+npm run dev
+```
+
 ## Introduction
 
 Having looked at a number of projects that use jQuery,
