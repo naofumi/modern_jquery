@@ -6,7 +6,18 @@ const calculators = $("[data-jquery='calculator']")
 calculators.each((_i, el) => {
   const calculator = $(el)
 
-  // Connect DOM elements
+  /*
+  * Connect DOM elements via behavior hooks.
+  *
+  * Having all of these defined at the top of the main function makes it
+  * easy to grasp what your code is responding to and what it changes.
+  *
+  * Notice how we use `data-*` attributes for behavior hooks.
+  * This makes it easy to understand the connection between the HTML and jQuery code.
+  * It is also very easy to search with grep.
+  *
+  * The attribute names used here were inspired by Stimulus.
+  * */
   const gradeButtonRegularTarget = calculator.find("[data-jquery-calculator-target='grade-selector-regular']")
   const gradeButtonFirstClassTarget = calculator.find("[data-jquery-calculator-target='grade-selector-first-class']")
   const passengerCountTarget = calculator.find("[data-jquery-calculator-target='passenger-count']")
@@ -15,14 +26,23 @@ calculators.each((_i, el) => {
   const totalPriceTarget = calculator.find("[data-jquery-calculator-target='total-price']")
   const messageTarget = calculator.find("[data-jquery-calculator-target='message']")
 
-  // State
+  /*
+  * State
+  *
+  * You can define state as a simple variable.
+  * This will be used inside functions as closures.
+  * */
   const state = {
     grade: 'regular',
     passengerCount: 1,
     discount: 20,
   }
 
-  // Attach event handlers
+  /*
+  * Attach event handlers
+  *
+  * It is a good idea to keep all your event handlers in the same section.
+  * */
   passengerCountTarget.on('change', () => {
     state.passengerCount = Number(passengerCountTarget.val() ?? 0)
     render()
@@ -47,8 +67,30 @@ calculators.each((_i, el) => {
     render()
   })
 
+  /*
+  * When you have a lot of event handlers updating a lot of DOM elements,
+  * it makes sense to use the [Mediator Pattern](https://refactoring.guru/design-patterns/mediator),
+  * and patterns that are similar to the one-way data flow pattern in React.
+  *
+  * Here, the Mediator is the `state`.
+  * Changes in the `state` flow through to all the DOM elements that are affected by
+  * this jQuery function.
+  *
+  * For some changes, you may not need to update all the elements.
+  * Indeed, it may be inefficient.
+  *
+  * However, just having a single function to update everything makes it much easier
+  * to reason about.
+  * */
   // Update DOM elements depending on current state
   function render() {
+    /*
+    * Business logic (calculating the price) is delegated to the
+    * Price class (model).
+    *
+    * This allows for cleaner code and also allows you to unit test the
+    * pricing algorithm.
+    * */
     const price = new Price({
       grade: gradeButtonRegularTarget.attr('aria-selected') === 'true' ? 'regular' : 'firstClass',
       passengerCount: state.passengerCount,
@@ -60,7 +102,7 @@ calculators.each((_i, el) => {
     unitPriceTarget.text(price.unit())
     totalPriceTarget.text(Math.round(price.total()))
     if (price.total() > 40000) {
-      messageTarget.text("ううう〜〜〜！ 高い！！！")
+      messageTarget.text("Wow!! That's expensive!")
     } else {
       messageTarget.text("")
     }
