@@ -1,13 +1,57 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modern jQuery</title>
+  <script type="module" src="./src/main.ts"></script>
+</head>
+<body>
+<div data-jquery="calculator">
+  <table class="table">
+    <thead>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th class="table__header">Grade</th>
+      <td class="table__cell">
+        <button data-jquery-calculator-target="grade-selector-regular" aria-selected="true" class="calculator__grade-selector">Regular seating</button>
+        <button data-jquery-calculator-target="grade-selector-first-class" class="calculator__grade-selector">First class</button>
+      </td>
+    </tr>
+    <tr>
+      <th class="table__header">Passenger count</th>
+      <td class="table__cell">
+        <input type="number" value="2" data-jquery-calculator-target="passenger-count"> people
+      </td>
+    </tr>
+    <tr>
+      <th class="table__header">Discount rate</th>
+      <td class="table__cell">
+        <input type="number" data-jquery-calculator-target="discount">%
+      </td>
+    </tr>
+    <tr>
+      <th class="table__header">Unit price</th>
+      <td class="table__cell">
+        <span data-jquery-calculator-target="unit-price"></span> JPY
+      </td>
+    </tr>
+    <tr>
+      <th class="table__header">Total price</th>
+      <td class="table__cell">
+        <span data-jquery-calculator-target="total-price"></span> JPY
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="center">
+  <div class="calculator__message" data-jquery-calculator-target="message"></div>
+  </div>
+</div>
+</body>
 </html>
