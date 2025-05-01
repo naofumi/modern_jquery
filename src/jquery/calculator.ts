@@ -3,6 +3,29 @@ import { Price } from './calculator/price.ts'
 
 const calculators = $("[data-jquery='calculator']")
 
+/*
+* As demonstrated below, I suggest splitting up your jQuery code into clear sections.
+*
+* * First section where DOM connections are declared and cached.
+* * State (if applicable)
+* * Event handlers
+* * Rendering
+*
+* If your state is simple, it may be OK to store state in the DOM.
+* In this case, the Event Handlers may also directly alter the DOM.
+*
+* However, if your state becomes complex, then it may be a good idea to
+* have state that is independent of the DOM.
+*
+* If this is the case, then your Event handlers will not directly change the DOM,
+* but just update state and call the rendering function.
+*
+* It will be the responsibility of the Rendering section to reflect the state to
+* the DOM.
+* The clear separation of state manipulation and rendering will make the code
+* easier to follow.
+*
+* */
 calculators.each((_i, el) => {
   const calculator = $(el)
 
@@ -45,6 +68,12 @@ calculators.each((_i, el) => {
   * */
   passengerCountTarget.on('change', () => {
     state.passengerCount = Number(passengerCountTarget.val() ?? 0)
+    /*
+    * You may be tempted to update the DOM immediately when the number of
+    * passengers changes.
+    * However, you should restrain yourself to just updating the state and then
+    * calling render().
+    * */
     render()
   })
 
@@ -55,6 +84,12 @@ calculators.each((_i, el) => {
 
   gradeButtonRegularTarget.on('click', () => {
     state.grade = 'regular'
+    /*
+    * Here we decided that changing the state of the gradeButtons
+    * wasn't worth having a separate state for.
+    * Unlike React, it's up to you to make the decision.
+    * You can use a separate state, or you can use the DOM.
+    * */
     gradeButtonRegularTarget.attr('aria-selected', 'true')
     gradeButtonFirstClassTarget.attr('aria-selected', 'false')
     render()
